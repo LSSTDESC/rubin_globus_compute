@@ -29,5 +29,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: lsstdesc/rubin-globus-compute:w_2025_17
+          tags: jchiang87/rubin-globus-compute:w_2025_17
           build-args: BUILD_DATE=${{ env.NOW }}
