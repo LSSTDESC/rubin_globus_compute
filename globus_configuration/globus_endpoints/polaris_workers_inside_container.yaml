@@ -3,7 +3,7 @@ display_name: RubinContainerEndpoint
 engine:
   max_workers_per_node: 1
   container_type: apptainer
-  container_uri: <PLACEHOLDER --> /full/path/to/your/file.sing>
+  container_uri: <PLACEHOLDER --> /full/path/to/your/.sing-or-.sif-file>
   container_cmd_options: --fakeroot
   provider:
     type: PBSProProvider
