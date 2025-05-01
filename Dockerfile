@@ -13,9 +13,11 @@ WORKDIR /home/lsst
 # Clone this repo.
 RUN git clone https://github.com/lsstdesc/rubin_globus_compute
 
-# Install Globus Compute endpoint software
+# Install Globus Compute endpoint software during development
 # Only need when Globus Compute directly executes functions within the container
-RUN pip install globus-compute-endpoint
+RUN python3 -m ensurepip --upgrade && \
+    python3 -m pip install --upgrade pip &&\
+    python3 -m pip install globus-compute-endpoint
 
 # Make a script to activate the LSST stack
 RUN echo "source /opt/lsst/software/stack/loadLSST.bash" >> .bashrc &&\
