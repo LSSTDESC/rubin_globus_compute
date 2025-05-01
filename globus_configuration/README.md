@@ -36,7 +36,8 @@ Activate your virtual environment:
 source ~/miniconda3/bin/activate ~/miniconda3/envs/gc-env
 ```
 
-Install Globus packages:
+Install necessary packages:
 ```bash
 pip install globus-compute-endpoint globus-compute-sdk globus-sdk
+pip install python-dotenv
 ```
