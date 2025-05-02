@@ -36,5 +36,8 @@ engine:
       export https_proxy=http://proxy.alcf.anl.gov:3128
       module unload xalt
   type: GlobusComputeEngine
-
-  
+# In production, always secure the endpoint by specifying which functions are allowed to run
+#allowed_functions:
+#   - <PLACEHOLDER --> your registered function UUID>
+#   - <PLACEHOLDER --> your other registered function UUID>
+#   - ...
