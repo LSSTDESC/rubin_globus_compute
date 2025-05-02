@@ -1,34 +1,35 @@
 # Globus Configuration
 
-This folder provides instructions on how to setup Globus Compute to run the Rubin/Desc workflow. Miniconda3 is used to create simple environment to deploy and operate Globus Compute (see below). Examples of compute endpoint configuration are given in the `compute_endpoints` folder. Examples of compute function registrations and usage are given in the `compute_functions` folder.
+This folder provides instructions on how to wrap LSST/Desc containers with Globus Compute for remote execution on the ALCF Polaric HPC cluster. Below are instructions regarding virtual environments. Instructions on how to configure Compute endpoints and execute Compute functions are provided in the `compute_endpoints` folder (step 1) and `compute_functions` folder (step 2), respectively.
 
-## Virtual Environment
+## Create Your Virtual Environment
 
-When configuring Globus Compute endpoints and registering/running Globus Compute functions, it is recommended to use environments that always have the same python version. Otherwise you may encounter issues related to serialization. If the functions are to be executed within the container directly (i.e. if the compute workers are deployed within the container), make sure the function registration is done using the same python version that is available within the container. You can check this version by executing the following:
+When configuring Globus Compute endpoints and registering/running Globus Compute functions, it is recommended to use environments that always have the same python version. Otherwise you may encounter issues related to serialization. It is important to note that such an environment separate from the LSST/Desc container environment. It is only needed to operate Globus Compute.
+
+If the functions are to be executed within the container directly (i.e. if the compute workers are deployed within the container), make sure that the python version where you register your function match the version used in the container. To verify which python version is used in the container, first acquire a compute node:
 ```bash
-apptainer exec --fakeroot /full/path/to/your/file.sing python3 --version
+qsub -I -A <your-compute-allocation> -q debug -l select=1 -l walltime=01:00:00 -l filesystems=home:grand:eagle
 ```
-If the functions are to be executed from outside of the container via a series of `apptainer exec` commands (i.e. if the compute workers are deployed on the compute node), the python version does not need to match the version within the container.
+
+Then, follow the [Apptainer Setup](https://docs.alcf.anl.gov/polaris/containers/containers/) instructions, and execute the following Apptainer command:
+```bash
+apptainer exec --fakeroot /full/path/to/your/.sing-or-.sif-file python3 --version
+```
 
 ### Example with Miniconda3
 
-Select the [miniconda installation file]((https://repo.anaconda.com/miniconda/)) that is the most appropriate for your system:
+Install Miniconda3 in your home directory (see more installation files [here]((https://repo.anaconda.com/miniconda/))):
 ```bash
-# This works for Polaris login nodes
 MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
-```
-
-Install Miniconda3 in your home directory:
-```bash
 mkdir -p ~/miniconda3
 wget https://repo.anaconda.com/miniconda/${MINICONDA_FILE} -O ~/miniconda3/miniconda.sh
 bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
 rm ~/miniconda3/miniconda.sh
 ```
 
-Create virtual environment with specific version (here 3.9.21 to match current container):
+Create a virtual environment with a specific python version (here `3.9.21` from current Dockerfile):
 ```bash
-~/miniconda3/bin/conda create -y -n gc-env python=3.9.21
+~/miniconda3/bin/conda create -y -n gc-env python=Python 3.9.21
 ```
 
 Activate your virtual environment:
@@ -36,8 +37,7 @@ Activate your virtual environment:
 source ~/miniconda3/bin/activate ~/miniconda3/envs/gc-env
 ```
 
-Install necessary packages:
+Install packages that are required to operate Globus Compute:
 ```bash
-pip install globus-compute-endpoint globus-compute-sdk globus-sdk
-pip install python-dotenv
+pip install -r requirements.txt
 ```
