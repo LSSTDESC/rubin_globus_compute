@@ -1,6 +1,6 @@
 import globus_compute_sdk
 
-# Test function to be executed inside the container
+# Test function when workers are deployed inside of the container
 def test_inside():
 
     # Import the necessary python packages
@@ -9,10 +9,12 @@ def test_inside():
     # Define all commands that need to be executed in the container
     # This needs to be hardcoded or vetted
     # ALCF would not allow arbitrary code execution
-    commands = [
-        "source ./setup_rubin-env.sh",
-        "butler create test_from_globus_compute"
-    ]
+    commands = """
+    source /opt/lsst/software/stack/loadLSST.bash
+    setup lsst_distrib
+    eups list lsst_distrib
+    command -v python
+    """
 
     # Define subprocess arguments
     kwargs = {
@@ -21,15 +23,14 @@ def test_inside():
         "check": True
     }
 
-    # For each command line ...
-    for command in commands:
-        try:
-            subprocess.run(command, **kwargs)
-        except subprocess.CalledProcessError as e:
-            return f"Error: while processing the following command: {command} -> {e}"
+    # Execute the command lines
+    try:
+        result = subprocess.run(commands, **kwargs)
+    except subprocess.CalledProcessError as e:
+        return f"Error: {e}"
         
-    # Return success message if everything worked
-    return "All commands ran successfully."
+    # Return command line output
+    return result.stdout.decode()
 
 # Creating Globus Compute client
 gcc = globus_compute_sdk.Client()
