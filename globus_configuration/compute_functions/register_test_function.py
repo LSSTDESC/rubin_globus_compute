@@ -1,7 +1,7 @@
 import globus_compute_sdk
 
 # Test function when workers are deployed inside of the container
-def test_inside():
+def test():
 
     # Import the necessary python packages
     import subprocess
@@ -38,10 +38,10 @@ def test_inside():
 gcc = globus_compute_sdk.Client()
 
 # # Register the function
-COMPUTE_FUNCTION_ID = gcc.register_function(test_inside)
+COMPUTE_FUNCTION_ID = gcc.register_function(test)
 
 # # Write function UUID in a file
-uuid_file_name = "uuid_test_inside_function.txt"
+uuid_file_name = "uuid_test_function.txt"
 with open(uuid_file_name, "w") as file:
     file.write(COMPUTE_FUNCTION_ID)
     file.write("\n")
