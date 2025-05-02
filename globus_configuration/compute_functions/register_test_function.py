@@ -7,8 +7,7 @@ def test_inside():
     import subprocess
 
     # Define all commands that need to be executed in the container
-    # This needs to be hardcoded or vetted
-    # ALCF would not allow arbitrary code execution
+    # This needs to be hardcoded or vetted (no arbitrary code execution)
     commands = """
     source /opt/lsst/software/stack/loadLSST.bash
     setup lsst_distrib

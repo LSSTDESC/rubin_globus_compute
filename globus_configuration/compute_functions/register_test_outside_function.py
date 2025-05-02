@@ -7,11 +7,12 @@ def test_outside():
     import subprocess
 
     # Define where the Apptainer .sif file is
-    sif_path = "/home/bcote/rubin_globus_compute_scripts/rubin_globus_compute.sif"
+    # [PLACEHOLDER] to swap here
+    # TODO: Make this an input argument
+    sif_path = "<PLACEHOLDER --> /full/path/to/your/.sing-or-.sif-file>"
 
     # Define all commands that need to be executed in the container
-    # This needs to be hardcoded or vetted
-    # ALCF would not allow arbitrary code execution
+    # This needs to be hardcoded or vetted (no arbitrary code execution)
     # Note: "&&" are needed here since apptainer exec will be used
     commands = """
     source /opt/lsst/software/stack/loadLSST.bash &&
