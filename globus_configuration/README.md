@@ -1,8 +1,8 @@
 # Globus Configuration
 
-This folder provides instructions on how to wrap LSST/Desc containers with Globus Compute for remote execution on the ALCF Polaris HPC cluster. Below are instructions regarding virtual environments. Instructions on how to configure Compute endpoints and execute Compute functions are provided in the [compute endpoints](./compute_endpoints/) and [compute functions](./compute_functions/) folders.
+This folder provides instructions on how to wrap LSST/Desc containers with Globus Compute for remote execution on the ALCF Polaris HPC cluster. Below are instructions regarding virtual environments and Globus accounts. Instructions on how to configure Compute endpoints and execute Compute functions are provided in the [compute endpoints](./compute_endpoints/) and [compute functions](./compute_functions/) folders.
 
-## Create Your Virtual Environment
+## Virtual Environment
 
 When configuring Globus Compute endpoints and registering/running Globus Compute functions, it is recommended to use environments that always have the same python version. Otherwise you may encounter issues related to serialization. It is important to note that such an environment is separate from the LSST/Desc container environment. It is only needed to operate Globus Compute.
 
@@ -41,3 +41,7 @@ Install packages that are required to operate Globus Compute:
 ```bash
 pip install -r requirements.txt
 ```
+
+## Globus Account
+
+Make sure you have an active [Globus account](https://app.globus.org/)
