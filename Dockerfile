@@ -13,8 +13,8 @@ WORKDIR /home/lsst
 # Clone this repo.
 RUN git clone https://github.com/lsstdesc/rubin_globus_compute
 
-# Install Globus Compute endpoint system-wide (not inside lsst environment to avoid altering dependencies)
-# Only need when Globus Compute directly executes functions within the container
+# Install Globus Compute endpoint system-wide (not inside lsst environment to avoid interfering with dependencies)
+# Only needed when Globus Compute directly executes functions within the container
 USER root
 RUN dnf install -y python3 python3-pip && \
     dnf clean all
@@ -22,6 +22,5 @@ RUN pip3 install globus-compute-endpoint
 USER lsst
 
 # Make a script to activate the LSST stack
-# [Warning], Apptainer does not source .bashrc
 RUN echo "source /opt/lsst/software/stack/loadLSST.bash" >> .bashrc &&\
     echo "setup lsst_distrib" >> .bashrc
