@@ -1,10 +1,10 @@
 # Globus Compute Endpoint Configuration
 
-This folder provides instructions on how to configure and deploy the Globus Compute endpoint on the HPC cluster. The endpoint is reponsible to interface with the local scheduler and execute tasks (Globus functions) within containers running on compute nodes. The task execution (see the [compute_functions](../compute_functions/) folder) can all be done remotely. 
+This folder provides instructions on how to configure and deploy the Globus Compute endpoint on the HPC cluster. The endpoint is reponsible to interface with the local scheduler and execute tasks (Globus functions) within containers running on compute nodes. The task execution (see the [compute functions](../compute_functions/) folder) can all be done remotely. 
 
 **Prerequisites**: The following instructions assume that you already have an Apptainer `.sif` or `.sing` file ready.
 
-**Note**: Every command below should be executed within your python virtual environment (see README in the [globus_configuration](../) folder).
+**Note**: Every command below should be executed within your python virtual environment (see README in the [globus configuration](../) folder).
 
 ## Initialize Your Endpoint
 

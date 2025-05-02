@@ -4,7 +4,7 @@ This folder provides instructions on how to execute commands within the containe
 
 **Prerequisites**: The following instructions assume that you already have a Globus Compute endpoint deployed and running on the HPC cluster.
 
-**Note**: Every command below should be executed within your python virtual environment (see README in the [globus_configuration](../) folder).
+**Note**: Every command below should be executed within your python virtual environment (see README in the [globus configuration](../) folder).
 
 ## Register Your Function
 
