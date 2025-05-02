@@ -1,6 +1,8 @@
 # Globus Compute Function Registration
 
-This folder provides instructions on how to execute commands within the containers using Globus Compute. Requests to execute Globus Compute functions will be sent to the Globus server, which will relay the request down to your Compute endpoint. These instructions assume that you already have a Globus Compute endpoint deployed and running on the HPC cluster.
+This folder provides instructions on how to execute commands within the containers using Globus Compute. Requests to execute Globus Compute functions will be sent to the Globus server, which will relay the request down to your Compute endpoint. 
+
+**Prerequisites**: The following instructions assume that you already have a Globus Compute endpoint deployed and running on the HPC cluster.
 
 **Note**: Every command below should be executed within your python virtual environment (see README in the previous `globus_configuration` folder).
 
