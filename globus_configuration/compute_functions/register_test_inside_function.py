@@ -33,7 +33,7 @@ def test_inside():
         return f"Error: {e}"
         
     # Return command line output
-    return result.stdout.decode()
+    return result.stdout
 
 # Creating Globus Compute client
 gcc = globus_compute_sdk.Client()
