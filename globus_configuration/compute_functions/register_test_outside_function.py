@@ -13,13 +13,15 @@ def test_outside():
 
     # Define all commands that need to be executed in the container
     # This needs to be hardcoded or vetted (no arbitrary code execution)
-    # Note: "&&" are needed here since apptainer exec will be used
     commands = """
-    source /opt/lsst/software/stack/loadLSST.bash &&
-    setup lsst_distrib &&
-    eups list lsst_distrib &&
+    source /opt/lsst/software/stack/loadLSST.bash
+    setup lsst_distrib
+    eups list lsst_distrib
     command -v python
     """
+
+    # Streamline the string quote into a single line (with && separators)
+    one_line_command = " && ".join(line.strip() for line in commands.strip().splitlines() if line.strip())
 
     # Define subprocess arguments
     kwargs = {
@@ -32,7 +34,7 @@ def test_outside():
     }
 
     # Define the Apptainer command to be executed on the compute node
-    apptainer_command = f"apptainer exec --fakeroot {sif_path} bash -c {commands.strip()}"
+    apptainer_command = f"apptainer exec --fakeroot {sif_path} bash -c '{one_line_command}'"
 
     # Execute the command lines
     try:
