@@ -27,4 +27,4 @@ Submit your Globus Compute task by executing the following script:
 python run_function.py
 ```
 
-If successful, this should return the output of the commands ran within the running container. In particular, the last command (`command -v python`) should return the executable from the LSST environment(`/opt/lsst/software/stack/conda/envs/lsst-scipipe-10.0.0/bin/python`).
+If successful, this should return the output of the commands ran within the container (see `register_test_function.py`). In particular, the last command (`command -v python`) should return the executable from the LSST environment (`/opt/lsst/software/stack/conda/envs/lsst-scipipe-10.0.0/bin/python`).
