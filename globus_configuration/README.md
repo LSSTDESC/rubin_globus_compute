@@ -26,9 +26,9 @@ bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
 rm ~/miniconda3/miniconda.sh
 ```
 
-Create virtual environment with specific version (here 3.9.19 to match current container):
+Create virtual environment with specific version (here 3.9.21 to match current container):
 ```bash
-~/miniconda3/bin/conda create -y -n gc-env python=3.9.19
+~/miniconda3/bin/conda create -y -n gc-env python=3.9.21
 ```
 
 Activate your virtual environment:
