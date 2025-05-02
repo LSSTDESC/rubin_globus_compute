@@ -16,7 +16,7 @@ The above command should print the registered function UUID, which is also store
 
 ## Test Your Function
 
-Create a `.env` environment file and add the following:
+Create a `.env` environment file (in the current folder where this README file is) and add the following:
 ```bash
 FUNCTION_ID="<PLACEHOLDER --> UUID of your registered Globus Compute function>"
 ENDPOINT_ID="<PLACEHOLDER --> UUID of your deployed Globus Compute endpoint>"
