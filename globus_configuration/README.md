@@ -1,6 +1,6 @@
 # Globus Configuration
 
-This folder provides instructions on how to wrap LSST/Desc containers with Globus Compute for remote execution on the ALCF Polaris HPC cluster. Below are instructions regarding virtual environments. Instructions on how to configure Compute endpoints and execute Compute functions are provided in the `compute_endpoints` folder (step 1) and `compute_functions` folder (step 2), respectively. [test](./compute_endpoints/)
+This folder provides instructions on how to wrap LSST/Desc containers with Globus Compute for remote execution on the ALCF Polaris HPC cluster. Below are instructions regarding virtual environments. Instructions on how to configure Compute endpoints and execute Compute functions are provided in the [compute_endpoints](./compute_endpoints/) and [compute_functions](./compute_functions/) folders.
 
 ## Create Your Virtual Environment
 
