@@ -20,7 +20,10 @@ def test_inside():
     kwargs = {
         "shell": True, 
         "executable": "/bin/bash",
-        "check": True
+        "check": True,
+        "stdout": subprocess.PIPE,
+        "stderr": subprocess.PIPE,
+        "text": True
     }
 
     # Execute the command lines
