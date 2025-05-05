@@ -2,9 +2,6 @@ amqp_port: 443
 display_name: RubinContainerEndpoint
 engine:
   max_workers_per_node: 1
-  container_type: apptainer
-  container_uri: <PLACEHOLDER --> /full/path/to/your/.sing-or-.sif-file>
-  container_cmd_options: --fakeroot
   provider:
     type: PBSProProvider
     launcher:
@@ -35,6 +32,7 @@ engine:
       export http_proxy=http://proxy.alcf.anl.gov:3128
       export https_proxy=http://proxy.alcf.anl.gov:3128
       module unload xalt
+      source ~/miniconda3/bin/activate ~/miniconda3/envs/gc-env
   type: GlobusComputeEngine
 # In production, always secure the endpoint by specifying which functions are allowed to run
 #allowed_functions:

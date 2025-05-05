@@ -1,20 +1,14 @@
 # Globus Configuration
 
-This folder provides instructions on how to wrap LSST/Desc containers with Globus Compute for remote execution on the ALCF Polaris HPC cluster. Below are instructions regarding virtual environments and Globus accounts. Instructions on how to configure Compute endpoints and execute Compute functions are provided in the [compute endpoints](./compute_endpoints/) and [compute functions](./compute_functions/) folders.
+This folder includes instructions on how to wrap LSST/Desc containers with Globus Compute for remote execution on the ALCF Polaris HPC cluster. Below are notes regarding virtual environments and Globus accounts. Instructions on how to configure Compute endpoints and execute Compute functions are provided in the [compute endpoints](./compute_endpoints/) and [compute functions](./compute_functions/) folders.
+
+## Globus Account
+
+Make sure you have an active [Globus account](https://app.globus.org/).
 
 ## Virtual Environment
 
-When configuring Globus Compute endpoints and registering/running Globus Compute functions, it is recommended to use environments that always have the same python version. Otherwise you may encounter issues related to serialization. It is important to note that such an environment is separate from the LSST/Desc container environment. It is only needed to operate Globus Compute.
-
-If the functions are to be executed within the container directly (i.e. if the compute workers are deployed within the container), make sure that the python version where you register your function matches the version used in the container. To verify which python version is used in the container, first acquire a compute node:
-```bash
-qsub -I -A <your-compute-allocation> -q debug -l select=1 -l walltime=01:00:00 -l filesystems=home:grand:eagle
-```
-
-Then, follow the [Apptainer Setup](https://docs.alcf.anl.gov/polaris/containers/containers/) instructions, and execute the following Apptainer command:
-```bash
-apptainer exec --fakeroot /full/path/to/your/.sing-or-.sif-file python3 --version
-```
+When configuring Globus Compute endpoints and registering/executing Globus Compute functions, you should always use an environment that has the same python version, otherwise you may encounter issues related to serialization.
 
 ### Example with Miniconda3
 
@@ -27,21 +21,13 @@ bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
 rm ~/miniconda3/miniconda.sh
 ```
 
-Create a virtual environment with a specific python version (here `3.9.21` from current Dockerfile):
+Create a virtual environment with a specific python version (here `3.9.21`):
 ```bash
 ~/miniconda3/bin/conda create -y -n gc-env python=3.9.21
 ```
 
-Activate your virtual environment:
+Activate your virtual environment and install the packages that are required to operate Globus Compute:
 ```bash
 source ~/miniconda3/bin/activate ~/miniconda3/envs/gc-env
-```
-
-Install packages that are required to operate Globus Compute:
-```bash
 pip install -r requirements.txt
 ```
-
-## Globus Account
-
-Make sure you have an active [Globus account](https://app.globus.org/)
