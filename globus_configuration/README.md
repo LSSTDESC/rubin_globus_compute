@@ -8,7 +8,7 @@ Make sure you have an active [Globus account](https://app.globus.org/).
 
 ## Virtual Environment
 
-When configuring Globus Compute endpoints and registering/executing Globus Compute functions, you should always use an environment that has the same python version, otherwise you may encounter issues related to serialization.
+When configuring Globus Compute endpoints and registering/executing Globus Compute functions, you should always use a virtual environment that has the same python version, otherwise you may encounter issues related to serialization.
 
 ### Example with Miniconda3
 
@@ -26,8 +26,12 @@ Create a virtual environment with a specific python version (here `3.12.4`):
 ~/miniconda3/bin/conda create -y -n gc-env python=3.12.4
 ```
 
-Activate your virtual environment and install the packages that are required to operate Globus Compute:
+Activate your virtual environment:
 ```bash
 source ~/miniconda3/bin/activate ~/miniconda3/envs/gc-env
+```
+
+Install the packages that are required to operate Globus Compute:
+```bash
 pip install -r requirements.txt
 ```
