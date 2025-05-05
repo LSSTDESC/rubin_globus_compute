@@ -12,7 +12,7 @@ When configuring Globus Compute endpoints and registering/executing Globus Compu
 
 ### Example with Miniconda3
 
-Install Miniconda3 in your home directory (see more installation files [here]((https://repo.anaconda.com/miniconda/))):
+If not already done, install Miniconda3 in your home directory (see more installation files [here](https://repo.anaconda.com/miniconda/)):
 ```bash
 MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
 mkdir -p ~/miniconda3
