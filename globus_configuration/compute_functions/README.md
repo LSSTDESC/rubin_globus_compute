@@ -20,7 +20,7 @@ Create a `.env` environment file (in the current folder where this README file i
 ```bash
 ENDPOINT_ID="PLACEHOLDER --> UUID of your deployed Globus Compute endpoint"
 FUNCTION_ID="PLACEHOLDER --> UUID of your registered Globus Compute function"
-SIF_SING_PATH="PLACEHOLDER --> /full/path/to/your/.sing_or_.sif_file
+SIF_SING_PATH="PLACEHOLDER --> /full/path/to/your/.sing_or_.sif_file"
 ```
 
 Submit your Globus Compute task by executing the following script:
