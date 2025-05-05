@@ -1,20 +1,16 @@
 # Globus Compute Endpoint Configuration
 
-This folder provides instructions on how to configure and deploy the Globus Compute endpoint on the HPC cluster. The endpoint is reponsible to interface with the local scheduler and execute tasks (Globus functions) within containers running on compute nodes.
-
-**Prerequisites**: The following instructions assume that you already have an Apptainer `.sif` or `.sing` file ready.
-
-**Note**: Every command below should be executed within your python virtual environment (see README in the [globus configuration](../) folder).
+This folder provides instructions on how to configure and deploy the Globus Compute endpoint on Polaris at ALCF. The endpoint is reponsible to interface with the local scheduler (PBS) and execute tasks (Globus functions) within containers running on compute nodes.
 
 ## Initialize Your Endpoint
 
-Create a Globus Compute endpoint on the HPC cluster:
+On a login node, initialize the Globus Compute endpoint:
 ```bash
 ENDPOINT_NAME="lsst_desc_endpoint"
 globus-compute-endpoint configure ${ENDPOINT_NAME}
 ```
 
-Replace the content of the endpoint configuration file (located on the HPC cluster at `~/.globus_compute/${ENDPOINT_NAME}/config.yaml`) with the content of the `polaris_config.yaml` file located in this folder. Make sure to customize the `PLACEHOLDER` to include the path to your `.sif` or `.sing` Apptainer file.
+Replace the content of the endpoint configuration file (located on the HPC cluster at `~/.globus_compute/${ENDPOINT_NAME}/config.yaml`) with the content of the `polaris_config.yaml` file located in this folder. **Important**: Make sure the last line of the `worker_init` represents how your Globus Compute virtual environment is activated.
 
 Start and deploy the endpoint (this might trigger a Globus authentication flow):
 ```bash
@@ -28,7 +24,7 @@ Check if your endpoint is running (also useful to recover its UUID):
 globus-compute-endpoint list
 ```
 
-If you change the configuration file, you need to restart the endpoint:
+If you modify the configuration file, you need to restart the endpoint:
 ```bash
 globus-compute-endpoint restart ${ENDPOINT_NAME}
 ```
