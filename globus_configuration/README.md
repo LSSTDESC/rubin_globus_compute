@@ -21,9 +21,9 @@ bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
 rm ~/miniconda3/miniconda.sh
 ```
 
-Create a virtual environment with a specific python version (here `3.9.21`):
+Create a virtual environment with a specific python version (here `3.12.4`):
 ```bash
-~/miniconda3/bin/conda create -y -n gc-env python=3.9.21
+~/miniconda3/bin/conda create -y -n gc-env python=3.12.4
 ```
 
 Activate your virtual environment and install the packages that are required to operate Globus Compute:
