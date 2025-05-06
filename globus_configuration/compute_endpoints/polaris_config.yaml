@@ -1,0 +1,41 @@
+amqp_port: 443
+display_name: RubinContainerEndpoint
+engine:
+  max_workers_per_node: 1
+  provider:
+    type: PBSProProvider
+    launcher:
+      type: SimpleLauncher
+    account: IRIBeta
+    cpus_per_node: 64
+    select_options: ngpus=0
+    scheduler_options: '#PBS -l filesystems=home:eagle'
+    queue: debug
+    init_blocks: 0
+    max_blocks: 1
+    min_blocks: 0
+    nodes_per_block: 1
+    walltime: 01:00:00
+    worker_init: |
+      ml use /soft/modulefiles
+      ml spack-pe-base/0.8.1
+      ml use /soft/spack/testing/0.8.1/modulefiles
+      ml apptainer/main
+      ml load e2fsprogs
+      export BASE_SCRATCH_DIR=/local/scratch/
+      export APPTAINER_TMPDIR=$BASE_SCRATCH_DIR/apptainer-tmpdir
+      mkdir -p $APPTAINER_TMPDIR
+      export APPTAINER_CACHEDIR=$BASE_SCRATCH_DIR/apptainer-cachedir
+      mkdir -p $APPTAINER_CACHEDIR
+      export HTTP_PROXY=http://proxy.alcf.anl.gov:3128
+      export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
+      export http_proxy=http://proxy.alcf.anl.gov:3128
+      export https_proxy=http://proxy.alcf.anl.gov:3128
+      module unload xalt
+      source ~/miniconda3/bin/activate ~/miniconda3/envs/gc-env
+  type: GlobusComputeEngine
+# In production, always secure the endpoint by specifying which functions are allowed to run
+#allowed_functions:
+#   - <PLACEHOLDER --> your registered function UUID>
+#   - <PLACEHOLDER --> your other registered function UUID>
+#   - ...
