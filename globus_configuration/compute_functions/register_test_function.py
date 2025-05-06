@@ -68,5 +68,3 @@ file.close()
 print("Function registered with UUID -", COMPUTE_FUNCTION_ID)
 print("The UUID is stored in " + uuid_file_name + ".")
 print("")
-
-
