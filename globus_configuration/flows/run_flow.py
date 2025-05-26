@@ -28,15 +28,6 @@ if not DESTINATION_ID: raise EnvironmentError("DESTINATION_ID environment variab
 if not DESTINATION_PATH: raise EnvironmentError("DESTINATION_PATH environment variable is not set.")
 if not DESTINATION_COLLECTION_BASE_PATH: raise EnvironmentError("DESTINATION_COLLECTION_BASE_PATH environment variable is not set.")
 
-# Create authenticated Flows client
-specific_flow_client = SpecificFlowClient(
-    flow_id=FLOW_ID,
-    app=UserApp(
-        client_id=AUTH_CLIENT_ID,
-        app_name="lsst-dest-flow-app"
-    )
-)
-
 # Define flow input to customize the workflow
 flow_input = {
     "input": {
@@ -53,16 +44,24 @@ flow_input = {
         "compute": {
             "endpoint": ENDPOINT_ID, # Globus Compute endpoint UUID for the computation
             "function": FUNCTION_ID, # Globus Compute function UUID for the computation
-            "arguments": [
-                {
-                    "sif_sing_path": SIF_SING_PATH, # Full path to the .sif or .sing container file
-                    "collection_base_path": DESTINATION_COLLECTION_BASE_PATH, # Full path to the base of the Globus collection
-                    "destination_path": DESTINATION_PATH #Path relative to the Globus collection where results will be written
-                }
-            ]
+            "arguments": {
+                "sif_sing_path": SIF_SING_PATH, # Full path to the .sif or .sing container file
+                "collection_base_path": DESTINATION_COLLECTION_BASE_PATH, # Full path to the base of the Globus collection
+                "destination_path": DESTINATION_PATH #Path relative to the Globus collection where results will be written
+            }
         }
     }
 }
+
+# Create authenticated Flows client
+# NOTE: This can be changed to use client's secrets to avoid having to authenticate
+specific_flow_client = SpecificFlowClient(
+    flow_id=FLOW_ID,
+    app=UserApp(
+        client_id=AUTH_CLIENT_ID,
+        app_name="lsst-dest-flow-app"
+    )
+)
 
 # Start the flow
 run = specific_flow_client.run_flow(

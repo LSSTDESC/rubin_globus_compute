@@ -31,7 +31,7 @@ flow_definition = {
             "Parameters": {
                 "endpoint.$": "$.input.compute.endpoint",
                 "function.$": "$.input.compute.function",
-                "args.$": "$.input.compute.arguments"
+                "kwargs.$": "$.input.compute.arguments"
             },
             "ResultPath": "$.Compute_output",
             "WaitTime": 172800,
@@ -63,6 +63,7 @@ flow_definition = {
 AUTH_CLIENT_ID = "f818e8c5-61ba-4f70-8237-a8e69f266ae7"
 
 # Create authenticated Flows client
+# NOTE: This can be changed to use client's secrets to avoid having to authenticate
 flows_client = FlowsClient(
     app=UserApp(
         client_id=AUTH_CLIENT_ID,

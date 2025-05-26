@@ -20,11 +20,11 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
 
     # Validate function inputs
     if not isinstance(sif_sing_path, str):
-        return "Error: 'sif_sing_path' parameter should be provided as a string."
+        raise Exception("Error: 'sif_sing_path' parameter should be provided as a string.")
     if not isinstance(collection_base_path, str):
-        return "Error: 'collection_base_path' parameter should be provided as a string."
+        raise Exception("Error: 'collection_base_path' parameter should be provided as a string.")
     if not isinstance(destination_path, str):
-        return "Error: 'destination_path' parameter should be provided as a string."
+        raise Exception("Error: 'destination_path' parameter should be provided as a string.")
     
     # Create a unique output folder name
     folder_name = f"test_repo_{str(uuid.uuid4())}"
@@ -65,7 +65,7 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
     try:
         result = subprocess.run(apptainer_command, **kwargs)
     except subprocess.CalledProcessError as e:
-        return f"Error: {e}"
+        raise subprocess.CalledProcessError(f"Error: {e}")
         
     # Return the output folder path relative to the base of the Globus collection
     return folder_path
