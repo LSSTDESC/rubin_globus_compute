@@ -61,9 +61,10 @@ def test(sif_sing_path=None, collection_base_path=None):
         raise subprocess.CalledProcessError(f"Error: {e}")
         
     # Return the output folder path relative to the base of the Globus collection
-    return {
-        "output_folder_name": output_folder_name
-    }
+    # Make sure the folder ends with a slash
+    if not output_folder_name.endswith("/"):
+        output_folder_name += "/"
+    return output_folder_name
 
 
 # Creating Globus Compute client
