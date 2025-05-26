@@ -32,10 +32,10 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
     # Build the path of the output folder relative to the base of the Globus collection
     if destination_path.startswith("/"):
         destination_path = destination_path[1:]
-    folder_path = os.path.join(destination_path, folder_name)
+    output_path = os.path.join(destination_path, folder_name)
 
     # Build the full path of the output folder from the HPC's filesystem perspective
-    full_output_path = os.path.join(collection_base_path, folder_path)
+    full_output_path = os.path.join(collection_base_path, output_path)
 
     # Define all commands that need to be executed in the container
     # This needs to be hardcoded or vetted (no arbitrary code execution)
@@ -68,7 +68,9 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
         raise subprocess.CalledProcessError(f"Error: {e}")
         
     # Return the output folder path relative to the base of the Globus collection
-    return folder_path
+    return {
+        "output_path": output_path
+    }
 
 
 # Creating Globus Compute client
