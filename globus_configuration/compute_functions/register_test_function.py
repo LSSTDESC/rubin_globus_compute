@@ -65,6 +65,5 @@ with open(uuid_file_name, "w") as file:
 file.close()
 
 # # End of script
-print("Function registered with UUID -", COMPUTE_FUNCTION_ID)
-print("The UUID is stored in " + uuid_file_name + ".")
-print("")
+print(f"\Function registered with UUID - {COMPUTE_FUNCTION_ID}")
+print(f"The UUID is stored in {uuid_file_name}.\n")
