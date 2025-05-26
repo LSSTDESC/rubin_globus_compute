@@ -46,8 +46,8 @@ flow_definition = {
                 "destination_endpoint.$": "$.input.source.id",
                 "DATA": [
                     {
-                        "source_path.$": "$.Compute_output.output_path",
-                        "destination_path.$": "$.Compute_output.output_path",
+                        "source_path.$": "$.Compute_output.output_folder_name",
+                        "destination_path.$": "$.Compute_output.output_folder_name",
                         "recursive": True,
                     }
                 ]

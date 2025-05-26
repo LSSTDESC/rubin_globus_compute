@@ -1,7 +1,7 @@
 import globus_compute_sdk
 
 # Test function when workers are deployed outside of the container
-def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
+def test(sif_sing_path=None, collection_base_path=None):
     """
     Test function that will load the LSST/Desc environment and print
     the location of the python executable from within the container.
@@ -10,7 +10,6 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
     --------
         sif_sing_path (str): Full path to the Apptainer .sif or .sing file
         collection_base_path(str): Full path to the base of the Globus collection
-        destination_path(str): Path relative to the Globus collection where results will be written
     """
 
     # Import the necessary python packages
@@ -23,19 +22,12 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
         raise Exception("Error: 'sif_sing_path' parameter should be provided as a string.")
     if not isinstance(collection_base_path, str):
         raise Exception("Error: 'collection_base_path' parameter should be provided as a string.")
-    if not isinstance(destination_path, str):
-        raise Exception("Error: 'destination_path' parameter should be provided as a string.")
     
     # Create a unique output folder name
-    folder_name = f"test_repo_{str(uuid.uuid4())}"
-
-    # Build the path of the output folder relative to the base of the Globus collection
-    if destination_path.startswith("/"):
-        destination_path = destination_path[1:]
-    output_path = os.path.join(destination_path, folder_name)
+    output_folder_name = f"test_repo_{str(uuid.uuid4())}"
 
     # Build the full path of the output folder from the HPC's filesystem perspective
-    full_output_path = os.path.join(collection_base_path, output_path)
+    full_output_path = os.path.join(collection_base_path, output_folder_name)
 
     # Define all commands that need to be executed in the container
     # This needs to be hardcoded or vetted (no arbitrary code execution)
@@ -44,6 +36,7 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
     setup lsst_distrib
     eups list lsst_distrib
     mkdir {full_output_path}
+    echo $(command -v python) > {full_output_path}/python_path.txt
     """
 
     # Define subprocess arguments
@@ -69,7 +62,7 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
         
     # Return the output folder path relative to the base of the Globus collection
     return {
-        "output_path": output_path
+        "output_folder_name": output_folder_name
     }
 
 
