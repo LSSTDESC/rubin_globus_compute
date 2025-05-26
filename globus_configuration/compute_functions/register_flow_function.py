@@ -9,6 +9,8 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
     Argument
     --------
         sif_sing_path (str): Full path to the Apptainer .sif or .sing file
+        collection_base_path(str): Full path to the base of the Globus collection
+        destination_path(str): Path relative to the Globus collection where results will be written
     """
 
     # Import the necessary python packages
@@ -28,6 +30,8 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
     folder_name = f"test_repo_{str(uuid.uuid4())}"
 
     # Build the path of the output folder relative to the base of the Globus collection
+    if destination_path.startswith("/"):
+        destination_path = destination_path[1:]
     folder_path = os.path.join(destination_path, folder_name)
 
     # Build the full path of the output folder from the HPC's filesystem perspective
@@ -35,7 +39,7 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
 
     # Define all commands that need to be executed in the container
     # This needs to be hardcoded or vetted (no arbitrary code execution)
-    commands = """
+    commands = f"""
     source /opt/lsst/software/stack/loadLSST.bash
     setup lsst_distrib
     eups list lsst_distrib
@@ -53,8 +57,9 @@ def test(sif_sing_path=None, collection_base_path=None, destination_path=None):
     }
 
     # Define the Apptainer command to be executed on the compute node
+    # Make sure to bind the Globus collection to allow the container to write on the filesystem
     one_line_command = " && ".join(line.strip() for line in commands.strip().splitlines() if line.strip())
-    apptainer_command = f"apptainer exec --fakeroot {sif_sing_path} bash -c '{one_line_command}'"
+    apptainer_command = f"apptainer exec --fakeroot -B {collection_base_path}:{collection_base_path} {sif_sing_path} bash -c '{one_line_command}'"
 
     # Execute the command lines
     try:
@@ -80,5 +85,5 @@ with open(uuid_file_name, "w") as file:
 file.close()
 
 # # End of script
-print(f"\Function registered with UUID - {COMPUTE_FUNCTION_ID}")
+print(f"\nFunction registered with UUID - {COMPUTE_FUNCTION_ID}")
 print(f"The UUID is stored in {uuid_file_name}.\n")
