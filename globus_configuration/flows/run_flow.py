@@ -46,8 +46,7 @@ flow_input = {
             "function": FUNCTION_ID, # Globus Compute function UUID for the computation
             "arguments": {
                 "sif_sing_path": SIF_SING_PATH, # Full path to the .sif or .sing container file
-                "collection_base_path": DESTINATION_COLLECTION_BASE_PATH, # Full path to the base of the Globus collection
-                "destination_path": DESTINATION_PATH #Path relative to the Globus collection where results will be written
+                "collection_base_path": DESTINATION_COLLECTION_BASE_PATH # Full path to the base of the Globus collection
             }
         }
     }
