@@ -1,7 +1,7 @@
 import globus_compute_sdk
 
 # Test function when workers are deployed outside of the container
-def test(sif_sing_path=None):
+def test(sif_sing_path=None, collection_base_path=None):
     """
     Test function that will load the LSST/Desc environment and print
     the location of the python executable from within the container.
@@ -9,22 +9,34 @@ def test(sif_sing_path=None):
     Argument
     --------
         sif_sing_path (str): Full path to the Apptainer .sif or .sing file
+        collection_base_path(str): Full path to the base of the Globus collection
     """
 
     # Import the necessary python packages
     import subprocess
+    import uuid
+    import os
 
-    # Make sure the sif_sing_path is a string
+    # Validate function inputs
     if not isinstance(sif_sing_path, str):
-        return "Error: 'sif_sing_path' parameter should be provided as a string."
+        raise Exception("Error: 'sif_sing_path' parameter should be provided as a string.")
+    if not isinstance(collection_base_path, str):
+        raise Exception("Error: 'collection_base_path' parameter should be provided as a string.")
+    
+    # Create a unique output folder name
+    output_folder_name = f"test_repo_{str(uuid.uuid4())}"
+
+    # Build the full path of the output folder from the HPC's filesystem perspective
+    full_output_path = os.path.join(collection_base_path, output_folder_name)
 
     # Define all commands that need to be executed in the container
     # This needs to be hardcoded or vetted (no arbitrary code execution)
-    commands = """
+    commands = f"""
     source /opt/lsst/software/stack/loadLSST.bash
     setup lsst_distrib
     eups list lsst_distrib
-    command -v python
+    mkdir {full_output_path}
+    echo $(command -v python) > {full_output_path}/python_path.txt
     """
 
     # Define subprocess arguments
@@ -38,17 +50,21 @@ def test(sif_sing_path=None):
     }
 
     # Define the Apptainer command to be executed on the compute node
+    # Make sure to bind the Globus collection to allow the container to write on the filesystem
     one_line_command = " && ".join(line.strip() for line in commands.strip().splitlines() if line.strip())
-    apptainer_command = f"apptainer exec --fakeroot {sif_sing_path} bash -c '{one_line_command}'"
+    apptainer_command = f"apptainer exec --fakeroot -B {collection_base_path}:{collection_base_path} {sif_sing_path} bash -c '{one_line_command}'"
 
     # Execute the command lines
     try:
         result = subprocess.run(apptainer_command, **kwargs)
     except subprocess.CalledProcessError as e:
-        return f"Error: {e}"
+        raise subprocess.CalledProcessError(f"Error: {e}")
         
-    # Return command line output
-    return result.stdout
+    # Return the output folder path relative to the base of the Globus collection
+    # Make sure the folder ends with a slash
+    if not output_folder_name.endswith("/"):
+        output_folder_name += "/"
+    return output_folder_name
 
 
 # Creating Globus Compute client
@@ -58,12 +74,12 @@ gcc = globus_compute_sdk.Client()
 COMPUTE_FUNCTION_ID = gcc.register_function(test)
 
 # # Write function UUID in a file
-uuid_file_name = "uuid_test_function.txt"
+uuid_file_name = "uuid_flow_function.txt"
 with open(uuid_file_name, "w") as file:
     file.write(COMPUTE_FUNCTION_ID)
     file.write("\n")
 file.close()
 
 # # End of script
-print(f"\Function registered with UUID - {COMPUTE_FUNCTION_ID}")
+print(f"\nFunction registered with UUID - {COMPUTE_FUNCTION_ID}")
 print(f"The UUID is stored in {uuid_file_name}.\n")
