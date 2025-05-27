@@ -1,6 +1,6 @@
 # Globus Flows Registration
 
-This folder provides instructions on how to register and execute a 3-step Globus Flow that 1) transfers a folder from a Globus collection to another collection at the HPC facility, 2) triggers a computation within an LSST/DESC container running on a compute node, and 3) transfers the result folder back to the original collection.
+This folder provides instructions on how to register and execute a Globus Flow to transfer files and trigger analysis on Polaris.
 
 **Prerequisites**: The following instructions assume that you already have:
 1. a Globus Compute endpoint deployed and running on Polaris,
@@ -39,11 +39,11 @@ DESTINATION_COLLECTION_BASE_PATH="PLACEHOLDER --> /full/path/to/the/base/of/your
 
 **Tips**
 
-* To transfer whole folders, make sure the name of the folder is explicitly written in both `SOURCE_PATH` and `DESTINATION_PATH`.
+* To transfer whole folders, make sure the name of the folder is explicitly written in both `SOURCE_PATH` and `DESTINATION_PATH`. It will be created at the destination if it does not exist.
 
 * Both `SOURCE_PATH` and `DESTINATION_PATH` are relative paths from the base of their respective Globus collections.
 
-* Both `SIF_SING_PATH` and `DESTINATION_COLLECTION_BASE_PATH` should be full paths from the perspective of the HPC's filesystem.
+* Both `SIF_SING_PATH` and `DESTINATION_COLLECTION_BASE_PATH` should be full paths from the perspective of the Eagle filesystem.
 
 Submit your flow run by executing the following script:
 ```bash
